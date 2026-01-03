@@ -217,7 +217,6 @@ public class RTSNorthUpCam : MonoBehaviour
             if (selectedAgentNav != null)
             {
                 selectedAgentNav.SetDestination(hit.point);
-                Debug.Log($"Set NavMesh destination for {selectedAgentType} to: {hit.point}");
             }
             else
             {
