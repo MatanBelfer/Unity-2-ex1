@@ -38,7 +38,8 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _QueueControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 0.46006632, b: 0, a: 1}
     - _VoronoiColor: {r: 0.4528302, g: 0.41745818, b: 0.010679956, a: 1}
