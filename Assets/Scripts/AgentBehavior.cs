@@ -16,7 +16,7 @@ public class AgentBehavior : MonoBehaviour
     {
         if (gameObject.transform.position != _lastPosition)
             if (_agent.pathEndPosition == _agent.transform.position && !_agent.pathPending)
-                UIManager.Instance.UpdateAgentArrival(gameObject.name);
+                UIManager.Instance.LogMessage(gameObject.name);
         _lastPosition = gameObject.transform.position;
     }
 }

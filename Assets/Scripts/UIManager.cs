@@ -1,49 +1,32 @@
+using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text agentArrivalText;
-    private int arrivalCount = 0;
+    [SerializeField] private TMP_Text logObject;
 
-    private static UIManager _instance;
-    public static UIManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<UIManager>();
-                if (_instance == null)
-                {
-                    GameObject obj = new GameObject("UIManager");
-                    _instance = obj.AddComponent<UIManager>();
-                }
-            }
-            return _instance;
-        }
-        private set { _instance = value; }
-    }
+    public static UIManager Instance { get; private set; }
 
     void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (Instance && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        _instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
     /// <summary>
-    /// Print a message when an agent arrives at its destination
+    /// Print a message to the on screen log
     /// </summary>
-    /// <param name="value">Agent name</param>
-    public void UpdateAgentArrival(string value)
+    public void LogMessage(string message)
     {
-        if (agentArrivalText == null) return;
-        arrivalCount++;
-        agentArrivalText.text = value + " arrived at destination #" + arrivalCount + "\n" + agentArrivalText.text;
+        if (!logObject) throw new Exception("Log object is invalid");
+        
+        logObject.text = string.Concat(message, "\n", logObject.text);
     }
 }
