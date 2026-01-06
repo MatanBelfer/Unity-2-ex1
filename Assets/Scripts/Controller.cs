@@ -6,17 +6,26 @@ using UnityEditor;
 public class Controller : MonoBehaviour
 {
     private NavMeshAgent agent;
-    private int lastAreaIndex = -1;
+    private int lastAreaIndex;
 
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        lastAreaIndex = getCurrentSurfaceIndex();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         CheckSurface();
+    }
+
+
+    private int getCurrentSurfaceIndex()
+    {
+        NavMeshHit hit;
+        NavMesh.SamplePosition(transform.position, out hit, 0.1f, NavMesh.AllAreas);
+        return hit.mask;
     }
 
     private void CheckSurface()
@@ -28,24 +37,10 @@ public class Controller : MonoBehaviour
 
             if (currentAreaIndex != lastAreaIndex)
             {
-                lastAreaIndex = currentAreaIndex;
-                
-                string areaName = GetAreaName(hit.mask);
-                
-                // OnSurfaceChanged?.Invoke(this, new SurfaceChangedEventArgs(areaName, transform.position));
+                Debug.Log("Area changed to " + currentAreaIndex);
             }
-        }
-    }
 
-    private string GetAreaName(int mask)
-    {
-        for (int i = 0; i < 32; i++)
-        {
-            if ((mask & (1 << i)) != 0)
-            {
-                // return GameObjectUtility.GetNavMeshAreaName(i);
-            }
+            lastAreaIndex = currentAreaIndex;
         }
-        return "Unknown";
     }
 }
